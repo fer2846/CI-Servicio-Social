@@ -27,7 +27,7 @@
             </ul>
         </div>
     </nav>
-    <div class="conatiner">
+    <div class="container">
         <br>
         <?php /*echo validation_errors('<div class="alert alert-danger" role="alert">', '</div>');*/?>
         

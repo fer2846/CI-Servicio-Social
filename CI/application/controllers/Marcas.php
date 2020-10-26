@@ -10,21 +10,14 @@
 
         public function index($arrDatos = [] ){
             
-            //$this->load->model('MdMarcas');
-            
-            //De esta forma podemos iterar con 'arrMarcas' e imprimir en
-            //pantalla lo de la base de datos.
             $arrDatosLista['arrMarcas']=$this->MdMarcas->listar();
             foreach($arrDatosLista['arrMarcas'] as $marca){
                 $marca->strId = $this->encrypt->encode($marca->id);
             }
 
-            //Cargamos $arrDatosMarcas al view listar por medio de $arrDatos
-            //que despues se para a la principal gracias a $arrDatos. 
             $arrDatos['strActivo']='marcas';
             $arrDatos['strContenido']=$this->load->view('marcas', $arrDatosLista , TRUE);
-            //Le pasamos el array datos y en la vista cargara, 
-            //lo que tenga el array, mediante la KEY[''].
+            
             $this->load->view('principal.php', $arrDatos);
         }
 
@@ -76,30 +69,23 @@
 
                 if($intResultado==1){
                     $arrDatos['intExito']=1;
-                    //echo 'El registro se guardo correctamente';
                     $arrDatos['strMensajes']= 'El registro se guardo correctamente';
-                    //AQUI ES DONDE FALLA, EN LA PARTE QUE CARGA EL INDEX. El problema
-                    //radica en las URL'S, ya que en principal no puedo agregar el link sin modificar
-                    //el href de bootstrap
                 } else {
                     $arrDatos['strMensajes']= 'No se pudo guadar el registro, intentelo nuevamente';
                 }
-                //echo $_POST['strNombre'];
-                //echo $_GET();
             }
 
             $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode($arrDatos));
+                ->set_content_type('application/json')
+                ->set_output(json_encode($arrDatos));
             
         }
 
         public function listar(){
             $arrDatos['arrMarcas']=$this->MdMarcas->listar();
             $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode($arrDatos));
-            
+                ->set_content_type('application/json')
+                ->set_output(json_encode($arrDatos));
         }
 
         public function editar($intId=0, $EsEditarGuardar=FALSE){

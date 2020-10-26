@@ -25,7 +25,7 @@
                     <td style="display:inline-block;">
                         <form action="<?php echo "http://localhost/".base_url();?>marcas/editar/" method="post" style="display:inline-block;">
                         <input type="hidden" value="<?=$objetoMarca->strId?>" name="strId">
-                        <button type="submit" class="btn btn-secondary">Editar</button>
+                        <button id="btnEditar" type="button" class="btn btn-secondary">Editar</button>
                         </form>
                         <form action="<?php echo "http://localhost/".base_url();?>marcas/eliminar/" method="post" 
                             onsubmit="if(!confirm('¿Desea eliminar este registro?')) return false;" 
@@ -122,9 +122,9 @@
                 strRenglon+=     '</form>'
                 strRenglon+= '</td>'
                 strRenglon+= '</tr>'
-                $('#dgMarcas').append(strRenglon);                    
+                $('#dgMarcas').append(strRenglon);
             });
-            //$('#contarRegistros').count(data.);
+            $('#contarRegistros').count();  
            
         });
     }
@@ -136,7 +136,6 @@
             strNombre: $('#txtNombre').val(),
             strDescripcion: $('#txtDescripcion').val(),
             intStatus: $('#cmbEstatus').val()
-
         };
 
         request=$.ajax({
@@ -153,8 +152,8 @@
                     strHtml+='success';
                 else  
                     strHtml+='danger';
-                    strHtml+='" role="alert"><strong>';
-                    strHtml+='!</strong>'  + data.strMensajes + '</div>';
+                strHtml+='" role="alert"><strong>';
+                strHtml+='!</strong>'  + data.strMensajes + '</div>';
 
                 $('#divMensajes').html(strHtml);
 
@@ -167,4 +166,24 @@
             alert("Request failed: "+ textStatus);
         });
     });
+
+    $('#btnEditar').on('click', function(e){
+        $objData={
+            intId: $('#txtId').val(),
+            strNombre: $('#txtNombre').val(),
+            strDescripcion: $('#txtDescripcion').val(),
+            intStatus: $('#cmbEstatus').val()
+        };
+
+        request=$.ajax({
+            url:'<?php echo "http://localhost/".base_url();?>marcas/editar/',
+            method:'POST',
+            data:$objData,
+            dataType:"json"
+        }).done(function(data){ //Este data no es le mismo que el de la linea 112, si no que es la respuesta del servidor.
+            
+        }).fail(function(jqXHR, textStatus){
+           
+        });
+    })
 </script>
