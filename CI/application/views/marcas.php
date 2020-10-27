@@ -1,3 +1,4 @@
+<?php echo $registro?>
 <div class="card">
   <h5 class="card-header">Marcas 
     <button id="btnAgregar" class="btn btn-primary float-right">Agregar</button>
@@ -23,15 +24,18 @@
                     <td><?=$objetoMarca->nombre?></td>
                     <td><?=$objetoMarca->status?></td>
                     <td style="display:inline-block;">
-                        <form action="<?php echo "http://localhost/".base_url();?>marcas/editar/" method="post" style="display:inline-block;">
-                        <input type="hidden" value="<?=$objetoMarca->strId?>" name="strId">
-                        <button id="btnEditar" type="button" class="btn btn-secondary">Editar</button>
+                        
+                        <form style="display:inline-block;">
+                            <input name="strId" type="hidden" value="<?=$objetoMarca->strId?>" id="strId">
+                            <button id="btnEditar" type="button" class="btn btn-secondary">Editar</button>
                         </form>
+                        
+                        
                         <form action="<?php echo "http://localhost/".base_url();?>marcas/eliminar/" method="post" 
                             onsubmit="if(!confirm('¿Desea eliminar este registro?')) return false;" 
                             style="display:inline-block;">
-                        <input type="hidden" value="<?=$objetoMarca->strId?>" name="strId">
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <input type="hidden" value="<?=$objetoMarca->strId?>" name="strId">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
                         </form>
                     </td>
                     </tr>
@@ -130,7 +134,7 @@
     }
 
     $('#btnGuardar').on('click', function(e){
-
+        
         $objData={
             intId: $('#txtId').val(),
             strNombre: $('#txtNombre').val(),
@@ -168,22 +172,26 @@
     });
 
     $('#btnEditar').on('click', function(e){
-        $objData={
+        /*$objData={
             intId: $('#txtId').val(),
             strNombre: $('#txtNombre').val(),
             strDescripcion: $('#txtDescripcion').val(),
             intStatus: $('#cmbEstatus').val()
+        };*/
+
+        $objData={
+            strId: $('#strId').val()
         };
 
         request=$.ajax({
-            url:'<?php echo "http://localhost/".base_url();?>marcas/editar/',
+            url:'<?php echo "http://localhost/".base_url();?>marcas/editar',
             method:'POST',
             data:$objData,
             dataType:"json"
         }).done(function(data){ //Este data no es le mismo que el de la linea 112, si no que es la respuesta del servidor.
-            
+            //Veo que en esta funcion solo hace post a strId en lugar de mandar todos los datos.
         }).fail(function(jqXHR, textStatus){
-           
+            alert("Request failed: "+ textStatus);
         });
     })
 </script>

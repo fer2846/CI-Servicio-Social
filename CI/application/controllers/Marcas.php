@@ -99,12 +99,15 @@
                 }
                 $arrDatos['strActivo']='marcas';
                 $arrDatos['strContenido']=$this->load->view('marcas/agregar', $arrDatos, TRUE);
-                $this->load->view('principal.php', $arrDatos);
+                //$this->load->view('principal.php', $arrDatos);
             }else{
-                $arrDatos['arrMensajes']= [array('intTipo' => 2,
-                                                 'strMensaje' => 'No se puede editar, intentelo de manera correcta')];
+                $arrDatos['arrMensajes']='No se puede editar, intentelo de manera correcta';
                 $this->index($arrDatos);
             }
+
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($arrDatos));
         }
 
         public function eliminar(){
