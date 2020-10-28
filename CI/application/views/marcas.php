@@ -1,4 +1,3 @@
-<?php echo $registro?>
 <div class="card">
   <h5 class="card-header">Marcas 
     <button id="btnAgregar" class="btn btn-primary float-right">Agregar</button>
@@ -172,15 +171,18 @@
     });
 
     $('#btnEditar').on('click', function(e){
-        /*$objData={
+        $('#divListar').toggle('fast');
+        $('#divFormulario').toggle('fast');
+
+        $('#btnAgregar').toggle('fast');
+        $('#btnAtras').toggle('fast');
+
+        $objData={
+            strId: $('#strId').val(),
             intId: $('#txtId').val(),
             strNombre: $('#txtNombre').val(),
             strDescripcion: $('#txtDescripcion').val(),
             intStatus: $('#cmbEstatus').val()
-        };*/
-
-        $objData={
-            strId: $('#strId').val()
         };
 
         request=$.ajax({
@@ -188,8 +190,8 @@
             method:'POST',
             data:$objData,
             dataType:"json"
-        }).done(function(data){ //Este data no es le mismo que el de la linea 112, si no que es la respuesta del servidor.
-            //Veo que en esta funcion solo hace post a strId en lugar de mandar todos los datos.
+        }).done(function(data){
+            $('#divFormulario').html(data);
         }).fail(function(jqXHR, textStatus){
             alert("Request failed: "+ textStatus);
         });
