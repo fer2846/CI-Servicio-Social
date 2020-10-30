@@ -127,7 +127,7 @@
                 strRenglon+= '</tr>'
                 $('#dgMarcas').append(strRenglon);
             });
-            $('#contarRegistros').count();  
+            $('#contarRegistros').val();  
            
         });
     }
@@ -185,6 +185,10 @@
             intStatus: $('#cmbEstatus').val()
         };
 
+        {console.log($objData)}
+
+        //{console.log($registro)}
+
         request=$.ajax({
             url:'<?php echo "http://localhost/".base_url();?>marcas/editar',
             method:'POST',
@@ -192,8 +196,10 @@
             dataType:"json"
         }).done(function(data){
             $('#divFormulario').html(data);
+            {console.log(data)}
         }).fail(function(jqXHR, textStatus){
             alert("Request failed: "+ textStatus);
         });
+        
     })
 </script>

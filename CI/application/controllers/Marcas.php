@@ -99,7 +99,7 @@
                 }
                 $arrDatos['strActivo']='marcas';
                 $arrDatos['strContenido']=$this->load->view('marcas/agregar', $arrDatos, TRUE);
-                //$this->load->view('principal.php', $arrDatos);
+                $this->load->view('principal.php', $arrDatos);
             }else{
                 $arrDatos['arrMensajes']='No se puede editar, intentelo de manera correcta';
                 $this->index($arrDatos);
